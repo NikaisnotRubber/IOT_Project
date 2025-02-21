@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/iotsim/lib/org.eclipse.paho.client.mqttv3-1.2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/iotsim/lib/fastjson-2.0.32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/iotsim/lib/lombok-1.18.26.jar!/" />
+      <root url="jar://$PROJECT_DIR$/iotsim/lib/fastjson2-extension-2.0.32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/iotsim/lib/fastjson2-2.0.32.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
