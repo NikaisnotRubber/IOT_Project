@@ -70,6 +70,4 @@ mqtt.default.topic=topic
 
 ### 数据库建表语句
 
-数据库的建表语句存储在在目录`src/main/resources`下，文件名为 `bs_database.sql` ，示意图如下：
-
-![image-20240104162318533](D:\Desktop\BS体系设计\大作业\BS_Project\BS_Backend\image-20240104162318533.png)
+数据库的建表语句存储在在目录`src/main/resources`下，文件名为 `bs_database.sql`
