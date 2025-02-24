@@ -1,50 +1,50 @@
-# 物联网设备后台管理系统
+# 物聯網設備後台管理系統
 
 > ZJU BS Backend  
 >
-> 后端框架:     SpringBoot  + MyBatis  +  MySQL
+> 後端框架:     SpringBoot  + MyBatis  +  MySQL
 >
-> 项目管理:     Maven
+> 項目管理:     Maven
 
-## 运行方式
+## 運行方式
 
-### 编写配置文件
+### 編寫配置文件
 
-在目录`src/main/resources`下新建`application.properties`文件，内容参考`application_template.properties`，仅需修改`EDIT ME`中带尖括号的信息即可（注意有两个地方，分别是数据库连接设置和JWT秘钥设置）。
+在目錄`src/main/resources`下新建`application.properties`文件，內容參考`application_template.properties`，僅需修改`EDIT ME`中帶尖括號的信息即可（注意有兩個地方，分別是數據庫連接設置和JWT秘鑰設置）。
 
-其中，第一个 `EDIT ME` 块主要是SpringBoot整合MyBatis需要的数据库连接配置，你可以参考这篇文章进行配置 [Spring Boot整合Mybatis](https://blog.csdn.net/junR_980218/article/details/124805813) 
+其中，第一個 `EDIT ME` 塊主要是SpringBoot整合MyBatis需要的數據庫連接配置，你可以參考這篇文章進行配置 [Spring Boot整合Mybatis](https://blog.csdn.net/junR_980218/article/details/124805813) 
 
-第一个 `EDIT ME` 块主要是用于生成 `JWT` 令牌的加密秘钥，你可以任取一串字符串作为秘钥
+第一個 `EDIT ME` 塊主要是用於生成 `JWT` 令牌的加密秘鑰，你可以任取一串字符串作為秘鑰
 
 ```properties
 #-----EDIT ME-----#
-# 数据库连接配置
+# 數據庫連接配置
 spring.datasource.driver-class-name=<your_datasource_driver-class-name>
-# 数据库连接URL
+# 數據庫連接URL
 spring.datasource.url=<your_datasource_url>
-# 数据库用户名
+# 數據庫用戶名
 spring.datasource.username=<your_datasource_username>
-# 数据库密码
+# 數據庫密碼
 spring.datasource.password=<your_datasource_password>
 #------------------#
 
 #-----EDIT ME-----#
-# JWT 配置 （任意字符串秘钥）
+# JWT 配置 （任意字符串秘鑰）
 jwt.secretKey=<"your_token_secret_key">
 #------------------#
 
 # MyBatis 配置
-# 使用标准输出作为 MyBatis 的日志实现
+# 使用標準輸出作為 MyBatis 的日誌實現
 mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
-# 将下划线分隔的命名转换为驼峰命名（例如，a_column -> aColumn）
+# 將下划線分隔的命名轉換為駝峰命名（例如，a_column -> aColumn）
 mybatis.configuration.map-underscore-to-camel-case=true
-# 扫描 MyBatis 类型别名的包
+# 掃描 MyBatis 類型別名的包
 mybatis.type-aliases-package=com.hwj.bs_backend.pojo
 
-# 日志配置
-# 根日志级别
+# 日誌配置
+# 根日誌級別
 logging.level.root=info
-# 解除以下行的注释以设置不同包的特定日志级别
+# 解除以下行的注釋以設置不同包的特定日誌級別
 # logging.level.com.hwj.bs_backend.controller=DEBUG
 logging.level.com.hwj.bs_backend.service=DEBUG
 logging.level.com.hwj.bs_backend.pojo=DEBUG
@@ -60,14 +60,11 @@ mqtt.default.topic=topic
 
 ### Notes
 
-- 在启动应用程序之前，请确保数据库服务器能够连接成功，你可以打开IDE或者相应的数据库软件来检测连接是否成功。
+- 在啓動應用程序之前，請確保數據庫服務器能夠連接成功，你可以打開IDE或者相應的數據庫軟件來檢測連接是否成功。
 
-### 编译运行
+### 編譯運行
 
-项目使用`maven`进行依赖管理，请自行参考`maven`的使用方法。或使用`IntelliJ IDEA`打开项目，使用`IDEA`自带的`maven`插件进行依赖的更新。当所有依赖更新完之后点击运行即可启动后端项目（这之前得先保证上一步的配置文件配置无误）。
+項目使用`maven`進行依賴管理，請自行參考`maven`的使用方法。或使用`IntelliJ IDEA`打開項目，使用`IDEA`自帶的`maven`插件進行依賴的更新。當所有依賴更新完之後點擊運行即可啓動後端項目（這之前得先保證上一步的配置文件配置無誤）。
 
-或者你也可以参考其他方式运行`maven`项目，可以参考这个 [总结启动maven项目的3种方式](https://blog.csdn.net/qq_43392001/article/details/99625275)
-
-### 数据库建表语句
-
-数据库的建表语句存储在在目录`src/main/resources`下，文件名为 `bs_database.sql`
+或者你也可以參考其他方式運行`maven`項目，可以參考這個 [總結啓動maven項目的3種方式](https://blog.csdn.net/qq_43392001/article/details/99625275)
+數據庫的建表語句存儲在在目錄`src/main/resources`下，文件名為 `bs_database.sql`
