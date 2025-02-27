@@ -1,7 +1,7 @@
 package com.param.bs_backend.mapper;
 
 
-import com.hwj.bs_backend.param.*;
+import com.param.bs_backend.param.*;
 import com.param.bs_backend.param.*;
 import org.apache.ibatis.annotations.*;
 import com.param.bs_backend.pojo.Device;

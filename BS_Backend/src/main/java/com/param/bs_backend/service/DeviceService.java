@@ -1,6 +1,6 @@
 package com.param.bs_backend.service;
 
-import com.hwj.bs_backend.param.*;
+import com.param.bs_backend.param.*;
 import com.param.bs_backend.param.*;
 import com.param.bs_backend.pojo.Device;
 import com.param.bs_backend.pojo.PageResult;

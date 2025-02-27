@@ -4,7 +4,7 @@ import com.param.bs_backend.param.LoginRequest;
 import com.param.bs_backend.param.LoginResponse;
 import com.param.bs_backend.param.PasswordRequest;
 import com.param.bs_backend.param.UserInfoRequest;
-import com.hwj.bs_backend.pojo.*;
+import com.param.bs_backend.pojo.*;
 import com.param.bs_backend.pojo.Result;
 import com.param.bs_backend.pojo.User;
 import com.param.bs_backend.service.UserService;

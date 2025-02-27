@@ -39,15 +39,15 @@ mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
 # 将下划线分隔的命名转换为驼峰命名（例如，a_column -> aColumn）
 mybatis.configuration.map-underscore-to-camel-case=true
 # 扫描 MyBatis 类型别名的包
-mybatis.type-aliases-package=com.hwj.bs_backend.pojo
+mybatis.type-aliases-package=com.param.bs_backend.pojo
 
 # 日志配置
 # 根日志级别
 logging.level.root=info
 # 解除以下行的注释以设置不同包的特定日志级别
-# logging.level.com.hwj.bs_backend.controller=DEBUG
-logging.level.com.hwj.bs_backend.service=DEBUG
-logging.level.com.hwj.bs_backend.pojo=DEBUG
+# logging.level.com.param.bs_backend.controller=DEBUG
+logging.level.com.param.bs_backend.service=DEBUG
+logging.level.com.param.bs_backend.pojo=DEBUG
 
 # MQTT配置信息
 mqtt.url=tcp://127.0.0.1:1883

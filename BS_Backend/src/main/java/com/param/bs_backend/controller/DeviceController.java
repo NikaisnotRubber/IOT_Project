@@ -1,7 +1,7 @@
 package com.param.bs_backend.controller;
 
 import com.param.bs_backend.annotation.TokenRequired;
-import com.hwj.bs_backend.param.*;
+import com.param.bs_backend.param.*;
 import com.param.bs_backend.param.*;
 import com.param.bs_backend.pojo.Device;
 import com.param.bs_backend.pojo.PageResult;

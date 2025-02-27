@@ -13,7 +13,8 @@
 
  Date: 04/01/2024 16:18:15
 */
-
+CREATE DATABASE IF NOT EXISTS iotdb;
+USE studyroom_dev;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -586,7 +587,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (2, 'hwj', 'pwd123', '3210103379@zju.edu.cn', '19357570418');
+INSERT INTO `user` VALUES (2, 'Param', 'pwd123', '3180100191@zju.edu.cn', '19357570418');
 INSERT INTO `user` VALUES (3, 'testEdit', 'update_pwd', 'testEdit@test.com', '123456');
 INSERT INTO `user` VALUES (4, 'admin', 'admin123', '2438452556@qq.com', '15167970568');
 INSERT INTO `user` VALUES (5, 'test2', 'test123', 'testfront@register.com', '15167970568');
