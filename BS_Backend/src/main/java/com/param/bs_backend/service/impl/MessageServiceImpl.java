@@ -20,10 +20,10 @@ public class MessageServiceImpl implements MessageService {
     private MessageMapper messageMapper;
 
     /**
-     * 查询当前用户所有设备的总消息数
+     * 查詢當前用戶所有設備的總消息數
      *
-     * @param userId 用户id
-     * @return 所有设备的总消息数
+     * @param userId 用戶id
+     * @return 所有設備的總消息數
      */
     @Override
     public Result<Integer> getTotalMessageCountByUserId(int userId) {
@@ -31,35 +31,35 @@ public class MessageServiceImpl implements MessageService {
             int counts = messageMapper.getTotalMessageCountByUserId(userId);
             return Result.success(counts);
         } catch (Exception e) {
-            log.error("查询当前用户所有设备的总消息数失败", e);
-            return Result.error("查询当前用户所有设备的总消息数失败：" + e.getMessage());
+            log.error("查詢當前用戶所有設備的總消息數失敗", e);
+            return Result.error("查詢當前用戶所有設備的總消息數失敗：" + e.getMessage());
         }
     }
 
     /**
-     * 查询设备的历史轨迹信息
+     * 查詢設備的歷史軌跡信息
      *
-     * @param deviceId 目标设备的id
-     * @return 包含设备历史轨迹信息的数组
+     * @param deviceId 目標設備的id
+     * @return 包含設備歷史軌跡信息的數組
      */
     @Override
     public Result<List<TrackResponse>> getDeviceHistoryTrack(String deviceId) {
         try {
-            // 调用mapper查询设备的历史轨迹信息
+            // 調用mapper查詢設備的歷史軌跡信息
             List<TrackResponse> tracks = messageMapper.getDeviceHistoryTrack(deviceId);
             return Result.success(tracks);
         } catch (Exception e) {
-            log.error("查询历史轨迹信息失败", e);
-            return Result.error("查询历史轨迹信息失败：" + e.getMessage());
+            log.error("查詢歷史軌跡信息失敗", e);
+            return Result.error("查詢歷史軌跡信息失敗：" + e.getMessage());
         }
 
     }
 
     /**
-     * 查询某一设备的历史消息
+     * 查詢某一設備的歷史消息
      *
-     * @param deviceId 目标设备的id
-     * @return 设备历史消息列表
+     * @param deviceId 目標設備的id
+     * @return 設備歷史消息列表
      */
     @Override
     public Result<List<MessageResponse>> getDeviceHistory(String deviceId) {
@@ -67,25 +67,25 @@ public class MessageServiceImpl implements MessageService {
             List<MessageResponse> messages = messageMapper.getDeviceHistory(deviceId);
             return Result.success(messages);
         } catch (Exception e) {
-            log.error("查询历史消息失败", e);
-            return Result.error("查询历史消息失败：" + e.getMessage());
+            log.error("查詢歷史消息失敗", e);
+            return Result.error("查詢歷史消息失敗：" + e.getMessage());
         }
     }
 
     /**
-     * 查询用户所属设备最近七天的消息总数
+     * 查詢用戶所屬設備最近七天的消息總數
      *
-     * @param userId 用户id
-     * @param today  当天的日期
-     * @return 最近七天用户接收的消息数量
+     * @param userId 用戶id
+     * @param today  當天的日期
+     * @return 最近七天用戶接收的消息數量
      */
     public Result<List<MessageCountResponse>> getReceivedMessageCount(Integer userId, Date today) {
         try {
             List<MessageCountResponse> messageCountLists = messageMapper.getReceivedMessageCount(userId, today);
             return Result.success(messageCountLists);
         } catch (Exception e) {
-            log.error("查询用户所属设备最近七天的消息总数失败", e);
-            return Result.error("查询用户所属设备最近七天的消息总数失败：" + e.getMessage());
+            log.error("查詢用戶所屬設備最近七天的消息總數失敗", e);
+            return Result.error("查詢用戶所屬設備最近七天的消息總數失敗：" + e.getMessage());
         }
     }
 

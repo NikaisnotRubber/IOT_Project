@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor // 无参构造函数
-@AllArgsConstructor // 有参构造函数
+@NoArgsConstructor // 無參構造函數
+@AllArgsConstructor // 有參構造函數
 public class UserInfoRequest {
 
     @JsonProperty("user_id")

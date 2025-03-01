@@ -5,14 +5,14 @@ services:
     build: ./mysql
     container_name: mysql
     ports:
-      - "3307:3306" # 测试用,从宿主机访问数据
+      - "3307:3306" # 測試用,從宿主機訪問數據
     networks:
       - iothub
   mosquitto:
     build: ./mosquitto
     container_name: mosquitto
     ports:
-      - "1883:1883" # 测试用
+      - "1883:1883" # 測試用
     networks:
       - iothub
   iotsim:
@@ -34,9 +34,9 @@ services:
     build: ./backend
     container_name: iotback
     ports:
-      - "8080:8080" # 测试用, 宿主机启动前端访问
+      - "8080:8080" # 測試用, 宿主機啓動前端訪問
     expose:
-      - 8080 
+      - 8080
     depends_on:
       - mysql
     networks:

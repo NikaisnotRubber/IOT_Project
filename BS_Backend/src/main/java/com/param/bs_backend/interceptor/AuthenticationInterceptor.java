@@ -23,23 +23,23 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     UserService userService;
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
-        // 从 http 请求头中取出 token
+        // 從 http 請求頭中取出 token
         String token = httpServletRequest.getHeader("Authorization");
-        // 判断当前拦截到的是Controller的方法还是其他资源
+        // 判斷當前攔截到的是Controller的方法還是其他資源
         if (!(object instanceof HandlerMethod handlerMethod)) {
-            //当前拦截到的不是动态方法，直接放行
+            //當前攔截到的不是動態方法，直接放行
             return true;
         }
         Method method = handlerMethod.getMethod();
-        //检查有没有需要用户权限的注解
+        //檢查有沒有需要用戶權限的註解
         if (method.isAnnotationPresent(TokenRequired.class)) {
             TokenRequired userLoginToken = method.getAnnotation(TokenRequired.class);
             if (userLoginToken.required()) {
-                // 执行认证
+                // 執行認證
                 if (token == null) {
-                    throw new RuntimeException("无token，请重新登录");
+                    throw new RuntimeException("無token，請重新登錄");
                 }
-                // 获取 token 中的 user id
+                // 獲取 token 中的 user id
                 String userId;
                 try {
                     userId = JWT.decode(token).getClaim("userId").asString();
@@ -56,12 +56,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
                 User user = userService.findUserById(userIdInteger);
                 if (user == null) {
-                    throw new RuntimeException("用户不存在，请重新登录");
+                    throw new RuntimeException("用戶不存在，請重新登錄");
                 }
-                // 验证 token
+                // 驗證 token
                 try {
                     if (!JwtUtil.verity(token)) {
-                        throw new RuntimeException("无效的令牌");
+                        throw new RuntimeException("無效的令牌");
                     }
                 } catch (JWTVerificationException e) {
                     throw new RuntimeException("401");

@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * Created by le.bai on 2020/4/18 21:03
- */
+
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
 
@@ -20,9 +18,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // InterceptorConfig内的addInterceptor需要一个实现HandlerInterceptor接口的拦截器实例，
-        // addPathPatterns方法用于设置拦截器的过滤路径规则。
-        // 拦截所有请求，通过判断是否有 @TokenRequired 注解 决定是否需要登录
+        // InterceptorConfig內的addInterceptor需要一個實現HandlerInterceptor接口的攔截器實例，
+        // addPathPatterns方法用於設置攔截器的過濾路徑規則。
+        // 攔截所有請求，通過判斷是否有 @TokenRequired 註解 決定是否需要登錄
         registry.addInterceptor(authenticationInterceptor())
                 .addPathPatterns("/**");
     }

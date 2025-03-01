@@ -41,12 +41,12 @@ public class MqttConsumerConfig {
     private String defaultTopic;
 
     /**
-     * 客户端对象
+     * 客戶端對象
      */
     private MqttClient client;
 
     /**
-     * 在bean初始化后连接到服务器
+     * 在bean初始化後連接到服務器
      */
     @PostConstruct
     public void init(){
@@ -54,36 +54,36 @@ public class MqttConsumerConfig {
     }
 
     /**
-     * 客户端连接服务端
+     * 客戶端連接服務端
      */
     public void connect(){
         try {
-            //创建MQTT客户端对象
+            //創建MQTT客戶端對象
             client = new MqttClient(hostUrl,clientId,new MemoryPersistence());
-            //连接设置
+            //連接設置
             MqttConnectOptions options = new MqttConnectOptions();
-            //是否清空session，设置为false表示服务器会保留客户端的连接记录，客户端重连之后能获取到服务器在客户端断开连接期间推送的消息
-            //设置为true表示每次连接到服务端都是以新的身份
+            //是否清空session，設置為false表示服務器會保留客戶端的連接記錄，客戶端重連之後能獲取到服務器在客戶端斷開連接期間推送的消息
+            //設置為true表示每次連接到服務端都是以新的身份
             options.setCleanSession(true);
-            //设置连接用户名
+            //設置連接用戶名
             options.setUserName(username);
-            //设置连接密码
+            //設置連接密碼
             options.setPassword(password.toCharArray());
-            //设置超时时间，单位为秒
+            //設置超時時間，單位為秒
             options.setConnectionTimeout(100);
-            //设置心跳时间 单位为秒，表示服务器每隔1.5*20秒的时间向客户端发送心跳判断客户端是否在线
+            //設置心跳時間 單位為秒，表示服務器每隔1.5*20秒的時間向客戶端發送心跳判斷客戶端是否在線
             options.setKeepAliveInterval(20);
-            //设置遗嘱消息的话题，若客户端和服务器之间的连接意外断开，服务器将发布客户端的遗嘱信息
-            options.setWill("willTopic",(clientId + "与服务器断开连接").getBytes(),0,false);
-            //设置回调
+            //設置遺囑消息的話題，若客戶端和服務器之間的連接意外斷開，服務器將發佈客戶端的遺囑信息
+            options.setWill("willTopic",(clientId + "與服務器斷開連接").getBytes(),0,false);
+            //設置回調
             client.setCallback(new MqttConsumerCallBack(deviceMapper,messageMapper));
             client.connect(options);
-            //订阅主题
-            //消息等级，和主题数组一一对应，服务端将按照指定等级给订阅了主题的客户端推送消息
+            //訂閱主題
+            //消息等級，和主題數組一一對應，服務端將按照指定等級給訂閱了主題的客戶端推送消息
             int[] qos = {1};
-            //主题
+            //主題
             String[] topics = {"testapp"};
-            //订阅主题
+            //訂閱主題
             client.subscribe(topics,qos);
         } catch (MqttException e) {
             e.printStackTrace();
@@ -91,7 +91,7 @@ public class MqttConsumerConfig {
     }
 
     /**
-     * 断开连接
+     * 斷開連接
      */
     public void disConnect(){
         try {
@@ -103,7 +103,7 @@ public class MqttConsumerConfig {
 
 
     /**
-     * 订阅主题
+     * 訂閱主題
      */
     public void subscribe(String topic,int qos){
         try {

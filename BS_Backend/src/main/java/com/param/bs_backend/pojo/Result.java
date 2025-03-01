@@ -3,14 +3,14 @@ package com.param.bs_backend.pojo;
 import lombok.Data;
 
 /**
- * 统一响应结果封装类
+ * 統一響應結果封裝類
  * @param <T>
  */
 @Data
 public class Result<T> {
-    private Integer success ;//1 成功 , 0 失败
+    private Integer success ;//1 成功 , 0 失敗
     private String msg; //提示信息
-    private T data; //数据 data
+    private T data; //數據 data
 
     public Result() {
     }

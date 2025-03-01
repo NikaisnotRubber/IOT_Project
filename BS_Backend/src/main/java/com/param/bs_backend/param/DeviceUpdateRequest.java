@@ -16,9 +16,9 @@ public class DeviceUpdateRequest {
     private String deviceName;
 
     /*
-    后端最好用封装类代替基本类来定义接受请求体参数的变量，因为基本类可能无法保存Null值，
-    会将Null存为默认值，从而对动态sql的判断条件产生影响，比如这里用int存的话，如果前端传入null或者undefined
-    它就会变成默认值0，影响后面动态sql非null的判断
+    後端最好用封裝類代替基本類來定義接受請求體參數的變量，因為基本類可能無法保存Null值，
+    會將Null存為默認值，從而對動態sql的判斷條件產生影響，比如這裡用int存的話，如果前端傳入null或者undefined
+    它就會變成默認值0，影響後面動態sql非null的判斷
      */
     @JsonProperty("device_type")
     private Integer deviceType;

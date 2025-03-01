@@ -19,7 +19,7 @@ public class Message {
     private String messageContent;
     private double latitude;
     private double longitude;
-    // 设备数据（根据mqtt客户端新增的字段）
+    // 設備數據（根據mqtt客戶端新增的字段）
     private int value;
 
 }

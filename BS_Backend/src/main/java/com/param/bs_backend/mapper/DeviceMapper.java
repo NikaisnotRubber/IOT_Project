@@ -13,40 +13,40 @@ import java.util.Date;
 public interface DeviceMapper {
 
     /**
-     * 获取某个设备信息
+     * 獲取某個設備信息
      *
-     * @param deviceId 设备ID
-     * @return 返回设备信息
+     * @param deviceId 設備ID
+     * @return 返回設備信息
      */
     @Select("SELECT * FROM device WHERE device_id = #{deviceId}")
     Device getDeviceInfo(@Param("deviceId") String deviceId);
 
     /**
-     * 获取用户设备信息列表
+     * 獲取用戶設備信息列表
      *
-     * @param userId 用户ID
-     * @return 返回用户设备信息列表
+     * @param userId 用戶ID
+     * @return 返回用戶設備信息列表
      */
     @Select("SELECT device_id, device_name, device_type, device_description, registration_time, is_active FROM device WHERE user_id = #{userId}")
     List<DeviceListResponse> getUserDevices(@Param("userId") Integer userId);
 
     /**
-     * 新增设备
-     * 使用了 UUID() 生成 唯一的device_id，并将 registration_time 同时赋值给 last_update。
+     * 新增設備
+     * 使用了 UUID() 生成 唯一的device_id，並將 registration_time 同時賦值給 last_update。
      *
-     * @param request 新增设备参数类
-     * @return 插入的记录数
+     * @param request 新增設備參數類
+     * @return 插入的記錄數
      */
     @Insert("INSERT INTO device (device_id, user_id, device_name, device_type, device_description, is_active, registration_time, last_update) " +
             "VALUES (UUID(), #{userId}, #{deviceName}, #{deviceType}, #{deviceDescription}, #{isActive}, #{registrationTime}, #{registrationTime})")
     int insertDevice(DeviceAddRequest request);
 
     /**
-     * 修改设备配置
+     * 修改設備配置
      *
-     * @param request  修改设备配置参数类
-     * @param deviceId 设备id
-     * @return 修改的记录数
+     * @param request  修改設備配置參數類
+     * @param deviceId 設備id
+     * @return 修改的記錄數
      */
     @Update({
             "<script>",
@@ -65,11 +65,11 @@ public interface DeviceMapper {
 
 
     /**
-     * 获取最近七天新增设备数量
+     * 獲取最近七天新增設備數量
      *
-     * @param userId 用户id
-     * @param today  当天的日期
-     * @return 最近七天新增的设备列表
+     * @param userId 用戶id
+     * @param today  當天的日期
+     * @return 最近七天新增的設備列表
      */
     @Select("SELECT DATE(registration_time) AS date, COUNT(*) AS count " +
             "FROM device " +
@@ -80,12 +80,12 @@ public interface DeviceMapper {
     List<DeviceCountResponse> getNewDevicesCount(@Param("userId") Integer userId, @Param("today") Date today);
 
     /**
-     * 根据查询条件返回分页数据
+     * 根據查詢條件返回分頁數據
      *
-     * @param deviceSearchRequest 查询条件
+     * @param deviceSearchRequest 查詢條件
      * @param offset               偏移量（(page - 1) * pageSize）
-     * @param pageSize             页的大小
-     * @return 分页结果
+     * @param pageSize             頁的大小
+     * @return 分頁結果
      */
     @SelectProvider(type = DeviceSqlProvider.class, method = "searchDevicesWithPaginationSql")
     List<DeviceListResponse> searchDevicesWithPagination(
@@ -93,28 +93,28 @@ public interface DeviceMapper {
             @Param("offset") int offset, @Param("pageSize") int pageSize);
 
     /**
-     * 计算分页获得数据数量
+     * 計算分頁獲得數據數量
      *
-     * @param deviceSearchRequest 查询请求条件
+     * @param deviceSearchRequest 查詢請求條件
      * @return Total count
      */
     @SelectProvider(type = DeviceSqlProvider.class, method = "countDevicesSql")
     int countDevices(@Param("searchRequest") DeviceSearchRequest deviceSearchRequest);
 
     /**
-     * 删除设备
+     * 刪除設備
      *
-     * @param deviceId 设备ID
-     * @return 删除的记录数
+     * @param deviceId 設備ID
+     * @return 刪除的記錄數
      */
     @Delete("DELETE FROM device WHERE device_id = #{deviceId}")
     int deleteDevice(@Param("deviceId") String deviceId);
 
     /**
-     * 根据设备名称查询匹配的所有设备ID
+     * 根據設備名稱查詢匹配的所有設備ID
      *
-     * @param deviceName 设备名称
-     * @return 匹配的所有设备ID列表
+     * @param deviceName 設備名稱
+     * @return 匹配的所有設備ID列表
      */
     @Select("SELECT device_id FROM device WHERE device_name = #{deviceName}")
     List<String> findDeviceIdsByDeviceName(@Param("deviceName") String deviceName);

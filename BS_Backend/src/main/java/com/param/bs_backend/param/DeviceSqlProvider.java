@@ -6,12 +6,12 @@ import org.apache.ibatis.jdbc.SQL;
 public class DeviceSqlProvider {
 
     /**
-     * 动态生成查询设备列表的 SQL 语句
+     * 動態生成查詢設備列表的 SQL 語句
      *
-     * @param deviceSearchRequest 查询条件
+     * @param deviceSearchRequest 查詢條件
      * @param offset 偏移量（(page - 1) * pageSize）
-     * @param pageSize 页的大小
-     * @return SQL 语句
+     * @param pageSize 頁的大小
+     * @return SQL 語句
      */
     public String searchDevicesWithPaginationSql(
             @Param("searchRequest") DeviceSearchRequest deviceSearchRequest,
@@ -39,9 +39,9 @@ public class DeviceSqlProvider {
     }
 
     /**
-     * 计算分页获得数据数量
+     * 計算分頁獲得數據數量
      *
-     * @param deviceSearchRequest 查询请求条件
+     * @param deviceSearchRequest 查詢請求條件
      * @return Total count
      */
     public String countDevicesSql(@Param("searchRequest") DeviceSearchRequest deviceSearchRequest) {

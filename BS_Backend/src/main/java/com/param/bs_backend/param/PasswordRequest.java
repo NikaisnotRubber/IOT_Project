@@ -7,18 +7,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor // 无参构造函数
-@AllArgsConstructor // 有参构造函数
+@NoArgsConstructor // 無參構造函數
+@AllArgsConstructor // 有參構造函數
 public class PasswordRequest {
 
     private String username;
-    
+
     @JsonProperty("old_password")
-    @JsonAlias("oldPassword") // 兼容其他名称
+    @JsonAlias("oldPassword") // 兼容其他名稱
     private String oldPassword;
 
     @JsonProperty("new_password")
-    @JsonAlias("newPassword") // 兼容其他名称
+    @JsonAlias("newPassword") // 兼容其他名稱
     private String newPassword;
 
 }

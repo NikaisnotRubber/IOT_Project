@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin // 允许跨域
+@CrossOrigin // 允許跨域
 @Slf4j
 @RestController
 @RequestMapping("user")
@@ -23,10 +23,10 @@ public class UserController {
     UserService userService;
 
     /**
-     * 用户登录
+     * 用戶登錄
      *
-     * @param loginRequest 传入的用户实例信息（用一个封装类接受）
-     * @return 返回service层处理后的Result实例
+     * @param loginRequest 傳入的用戶實例信息（用一個封裝類接受）
+     * @return 返回service層處理後的Result實例
      */
     @PostMapping("/login")
     public Result<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
@@ -34,10 +34,10 @@ public class UserController {
     }
 
     /**
-     * 用户注册
+     * 用戶註冊
      *
-     * @param user 注册用户信息
-     * @return 返回注册结果
+     * @param user 註冊用戶信息
+     * @return 返回註冊結果
      */
     @PostMapping("/register")
     public Result<LoginResponse> register(@RequestBody User user) {
@@ -45,38 +45,38 @@ public class UserController {
     }
 
     /**
-     * 用户修改密码(TODO:还未实现token鉴权拦截)
+     * 用戶修改密碼(TODO:還未實現token鑒權攔截)
      *
-     * @param passwordRequest 包含用户名、旧密码、新密码的请求体
-     * @return 返回修改密码结果
+     * @param passwordRequest 包含用戶名、舊密碼、新密碼的請求體
+     * @return 返回修改密碼結果
      */
     @PostMapping("/updatePassword")
-    @TokenRequired // 添加 TokenRequired 注解，表示需要 token 鉴权
+    @TokenRequired // 添加 TokenRequired 註解，表示需要 token 鑒權
     public Result<String> updatePassword(@RequestBody PasswordRequest passwordRequest) {
         return userService.updatePassword(passwordRequest.getUsername(), passwordRequest.getOldPassword(), passwordRequest.getNewPassword());
     }
 
     /**
-     * 编辑个人信息
+     * 編輯個人信息
      *
-     * @param userInfoRequest 包含用户ID、新用户名、新邮箱和新手机号的请求体
-     * @return 返回编辑个人信息结果
+     * @param userInfoRequest 包含用戶ID、新用戶名、新郵箱和新手機號的請求體
+     * @return 返回編輯個人信息結果
      */
     @PostMapping("/editUserInfo")
-    @TokenRequired // 添加 TokenRequired 注解，表示需要 token 鉴权
+    @TokenRequired // 添加 TokenRequired 註解，表示需要 token 鑒權
     public Result<String> editUserInfo(@RequestBody UserInfoRequest userInfoRequest) {
         System.out.println(userInfoRequest);
         return userService.editUserInfo(userInfoRequest.getUserId(), userInfoRequest.getNewUsername(), userInfoRequest.getNewEmail(), userInfoRequest.getNewPhone());
     }
 
     /**
-     * 根据user_id重新获取用户信息
+     * 根據user_id重新獲取用戶信息
      *
-     * @param userId 用户id
-     * @return 登录结果的response类（存储用户信息和token）
+     * @param userId 用戶id
+     * @return 登錄結果的response類（存儲用戶信息和token）
      */
     @GetMapping("/getUserInfo")
-    @TokenRequired // 添加 TokenRequired 注解，表示需要 token 鉴权
+    @TokenRequired // 添加 TokenRequired 註解，表示需要 token 鑒權
     public Result<LoginResponse> login(@RequestParam("user_id") Integer userId) {
         return userService.getUserInfo(userId);
     }

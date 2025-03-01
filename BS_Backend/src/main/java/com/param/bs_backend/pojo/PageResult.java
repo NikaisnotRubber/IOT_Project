@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PageResult<T> {
     private T data;
-    private int totalCount; // 总共返回的数量
-    private int currentPage; // 当前页
-    private int pageSize; // 页的大小
+    private int totalCount; // 總共返回的數量
+    private int currentPage; // 當前頁
+    private int pageSize; // 頁的大小
 }
 

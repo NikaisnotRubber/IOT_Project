@@ -20,13 +20,13 @@ public class MqttController {
     @ResponseBody
     public String connect(){
         client.connect();
-        return clientId + "连接到服务器";
+        return clientId + "連接到服務器";
     }
 
     @RequestMapping("/disConnect")
     @ResponseBody
     public String disConnect(){
         client.disConnect();
-        return clientId + "与服务器断开连接";
+        return clientId + "與服務器斷開連接";
     }
 }

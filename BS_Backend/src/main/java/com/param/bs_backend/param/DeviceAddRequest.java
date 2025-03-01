@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeviceAddRequest {
-    // 使用 @JsonProperty 注解来指定请求体中的参数与实体类字段之间的映射关系
+    // 使用 @JsonProperty 註解來指定請求體中的參數與實體類字段之間的映射關係
     @JsonProperty("user_id")
     private int userId;
 

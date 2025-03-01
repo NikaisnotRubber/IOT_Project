@@ -25,53 +25,53 @@ public class DeviceServiceImpl implements DeviceService {
     DeviceMapper deviceMapper;
 
     /**
-     * 获取某个设备信息
+     * 獲取某個設備信息
      *
-     * @param deviceId 目标设备的id
-     * @return Result 包含设备信息的结果
+     * @param deviceId 目標設備的id
+     * @return Result 包含設備信息的結果
      */
     @Override
     public Result<Device> getDeviceInfo(String deviceId) {
         try {
-            // 调用 Mapper 层查询设备信息
+            // 調用 Mapper 層查詢設備信息
             Device device = deviceMapper.getDeviceInfo(deviceId);
 
             if (device != null) {
                 return Result.success(device);
             } else {
-                return Result.error("设备不存在");
+                return Result.error("設備不存在");
             }
         } catch (Exception e) {
-            log.error("获取设备信息失败", e);
-            return Result.error("获取设备信息失败：" + e.getMessage());
+            log.error("獲取設備信息失敗", e);
+            return Result.error("獲取設備信息失敗：" + e.getMessage());
         }
     }
 
     /**
-     * 查询用户设备列表
+     * 查詢用戶設備列表
      *
-     * @param userId 用户的id
-     * @return Result 包含设备列表的结果
+     * @param userId 用戶的id
+     * @return Result 包含設備列表的結果
      */
     @Override
     public Result<DeviceListWithCount> getUserDevices(Integer userId) {
         try {
-            // 调用 Mapper 层查询用户设备列表
+            // 調用 Mapper 層查詢用戶設備列表
             List<DeviceListResponse> devices = deviceMapper.getUserDevices(userId);
 
-            // 计算设备类型数量
+            // 計算設備類型數量
             Map<Integer, Long> countMap;
             countMap = devices.stream()
                     .collect(Collectors.groupingBy(DeviceListResponse::getDeviceType, Collectors.counting()));
 
-            // 验证设备类型是否在指定范围内
+            // 驗證設備類型是否在指定範圍內
             for (Integer type : countMap.keySet()) {
                 if (type < 1 || type > 6) {
-                    return Result.error("无效的设备类型：" + type);
+                    return Result.error("無效的設備類型：" + type);
                 }
             }
 
-            // 创建 countList
+            // 創建 countList
             List<Integer> countList = Arrays.asList(
                     Math.toIntExact(countMap.getOrDefault(1, 0L)),
                     Math.toIntExact(countMap.getOrDefault(2, 0L)),
@@ -81,68 +81,68 @@ public class DeviceServiceImpl implements DeviceService {
                     Math.toIntExact(countMap.getOrDefault(6, 0L))
             );
 
-            // 封装到新的类中
+            // 封裝到新的類中
             DeviceListWithCount result = new DeviceListWithCount(devices, countList);
 
             return Result.success(result);
         } catch (Exception e) {
             e.printStackTrace();
-            return Result.error("获取设备列表失败：" + e.getMessage());
+            return Result.error("獲取設備列表失敗：" + e.getMessage());
         }
     }
 
     /**
-     * 新增设备
+     * 新增設備
      *
-     * @param request 新增设备参数类
-     * @return 返回新增设备处理结果
+     * @param request 新增設備參數類
+     * @return 返回新增設備處理結果
      */
     @Override
     public Result<String> addDevice(DeviceAddRequest request) {
         try {
             int insertRowCount = deviceMapper.insertDevice(request);
             if (insertRowCount != 0) {
-                return Result.success("设备添加成功");
+                return Result.success("設備添加成功");
             } else {
-                return Result.error("新增设备失败：");
+                return Result.error("新增設備失敗：");
             }
 
         } catch (Exception e) {
-            log.error("新增设备失败", e);
-            return Result.error("新增设备失败：" + e.getMessage());
+            log.error("新增設備失敗", e);
+            return Result.error("新增設備失敗：" + e.getMessage());
         }
     }
 
 
     /**
-     * 修改设备配置
+     * 修改設備配置
      *
-     * @param request  修改设备配置参数类
-     * @param deviceId 设备id
-     * @return 返回修改设备配置处理结果
+     * @param request  修改設備配置參數類
+     * @param deviceId 設備id
+     * @return 返回修改設備配置處理結果
      */
     @Override
     public Result<String> updateDevice(String deviceId, DeviceUpdateRequest request) {
         try {
-            // 更新设备信息时，只更新参数不为null的字段
+            // 更新設備信息時，只更新參數不為null的字段
             int updateRowCount = deviceMapper.updateDevice(deviceId, request);
             if (updateRowCount != 0) {
-                return Result.success("设备信息更新成功");
+                return Result.success("設備信息更新成功");
             } else {
-                return Result.error("设备信息更新失败，设备不存在或更新行数为0");
+                return Result.error("設備信息更新失敗，設備不存在或更新行數為0");
             }
         } catch (Exception e) {
-            log.error("更新设备信息失败", e);
-            return Result.error("更新设备信息失败：" + e.getMessage());
+            log.error("更新設備信息失敗", e);
+            return Result.error("更新設備信息失敗：" + e.getMessage());
         }
     }
 
     /**
-     * 获取最近七天新增设备数量
+     * 獲取最近七天新增設備數量
      *
-     * @param userId 用户id
-     * @param today  当天的日期
-     * @return 最近七天新增的设备列表
+     * @param userId 用戶id
+     * @param today  當天的日期
+     * @return 最近七天新增的設備列表
      */
     @Override
     public Result<List<DeviceCountResponse>> getNewDevicesCount(Integer userId, Date today) {
@@ -150,18 +150,18 @@ public class DeviceServiceImpl implements DeviceService {
             List<DeviceCountResponse> counts = deviceMapper.getNewDevicesCount(userId, today);
             return Result.success(counts);
         } catch (Exception e) {
-            log.error("获取最近七天新增设备数量失败", e);
-            return Result.error("获取最近七天新增设备数量失败：" + e.getMessage());
+            log.error("獲取最近七天新增設備數量失敗", e);
+            return Result.error("獲取最近七天新增設備數量失敗：" + e.getMessage());
         }
     }
 
     /**
-     * 根据查询条件返回分页数据
+     * 根據查詢條件返回分頁數據
      *
-     * @param deviceSearchRequest 查询条件
-     * @param page                 当前的页号
-     * @param pageSize             页的大小
-     * @return 分页结果
+     * @param deviceSearchRequest 查詢條件
+     * @param page                 當前的頁號
+     * @param pageSize             頁的大小
+     * @return 分頁結果
      */
     @Override
     public PageResult<List<DeviceListResponse>> searchDevicesWithPagination(
@@ -181,24 +181,24 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     /**
-     * 删除设备
+     * 刪除設備
      *
-     * @param deviceId 设备id
-     * @return 返回删除结果
+     * @param deviceId 設備id
+     * @return 返回刪除結果
      */
     @Override
     public Result<String> deleteDevice(String deviceId) {
         try {
-            // 调用 Mapper 层删除设备
+            // 調用 Mapper 層刪除設備
             int deleteRowCount = deviceMapper.deleteDevice(deviceId);
             if (deleteRowCount > 0) {
-                return Result.success("设备删除成功");
+                return Result.success("設備刪除成功");
             } else {
-                return Result.error("设备删除失败，设备不存在或删除行数为0");
+                return Result.error("設備刪除失敗，設備不存在或刪除行數為0");
             }
         } catch (Exception e) {
-            log.error("删除设备失败", e);
-            return Result.error("删除设备失败：" + e.getMessage());
+            log.error("刪除設備失敗", e);
+            return Result.error("刪除設備失敗：" + e.getMessage());
         }
     }
 }

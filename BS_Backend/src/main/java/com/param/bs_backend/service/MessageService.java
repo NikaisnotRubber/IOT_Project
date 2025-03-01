@@ -12,35 +12,35 @@ import java.util.List;
 public interface MessageService {
 
     /**
-     * 查询当前用户所有设备的总消息数
+     * 查詢當前用戶所有設備的總消息數
      *
-     * @param userId 用户ID
-     * @return 所有设备的总消息数量
+     * @param userId 用戶ID
+     * @return 所有設備的總消息數量
      */
     Result<Integer> getTotalMessageCountByUserId(int userId);
 
     /**
-     * 查询设备的历史轨迹信息
+     * 查詢設備的歷史軌跡信息
      *
-     * @param deviceId 目标设备的id
-     * @return 包含设备历史轨迹信息的数组
+     * @param deviceId 目標設備的id
+     * @return 包含設備歷史軌跡信息的數組
      */
     Result<List<TrackResponse>> getDeviceHistoryTrack(String deviceId);
 
     /**
-     * 查询某一设备的历史消息
+     * 查詢某一設備的歷史消息
      *
-     * @param deviceId 目标设备的id
-     * @return 设备历史消息列表
+     * @param deviceId 目標設備的id
+     * @return 設備歷史消息列表
      */
     Result<List<MessageResponse>> getDeviceHistory(String deviceId);
 
     /**
-     * 查询用户所属设备最近七天的消息总数
+     * 查詢用戶所屬設備最近七天的消息總數
      *
-     * @param userId 用户id
-     * @param today  当天的日期
-     * @return 最近七天用户接收的消息数量
+     * @param userId 用戶id
+     * @param today  當天的日期
+     * @return 最近七天用戶接收的消息數量
      */
     Result<List<MessageCountResponse>> getReceivedMessageCount(Integer userId, Date today);
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.HashMap;
 
-@Component  // 添加此注解以使其成为Spring管理的组件
+@Component  // 添加此註解以使其成為Spring管理的組件
 public class JwtUtil {
 
     //过期时间15分钟
@@ -20,28 +20,28 @@ public class JwtUtil {
     // 从配置文件中读取密钥
     private static String TOKEN_SECRET;
 
-    // 使用注入的值覆盖静态字段
+    // 使用注入的值覆蓋靜態字段
     @Value("${jwt.secretKey}")
     public void setTokenSecret(String tokenSecret) {
         JwtUtil.TOKEN_SECRET = tokenSecret;
     }
 
-    //生成签名,15分钟后过期
+    //生成簽名,15分鐘後過期
     public static String sign(int userId) {
-        //过期时间
+        //過期時間
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
-        // 使用密钥进行加密
+        // 使用密鑰進行加密
         Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
-        //设置头信息
+        //設置頭信息
         HashMap<String, Object> header = new HashMap<>(2);
         header.put("typ", "JWT");
         header.put("alg", "HS256");
-        //附带userID生成签名
+        //附帶userID生成簽名
         return JWT.create().withHeader(header).withClaim("userId", userId)
                 .withExpiresAt(date).sign(algorithm);
     }
 
-    //校验token
+
     public static boolean verity(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
@@ -53,7 +53,7 @@ public class JwtUtil {
         }
     }
 
-    // 从 token 中解析出 userId
+    // 從 token 中解析出 userId
     public static int getUserIdFromToken(String token) {
         try {
             return JWT.decode(token).getClaim("userId").asInt();

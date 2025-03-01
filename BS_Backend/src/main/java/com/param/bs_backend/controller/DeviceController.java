@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
-@CrossOrigin // 允许跨域
+@CrossOrigin // 允許跨域，相當於是給我們服務器一個白名單，讓他不會攔截我們的靜態資源
 @Slf4j
 @RestController
 @RequestMapping("device")
@@ -24,13 +24,13 @@ public class DeviceController {
     DeviceService deviceService;
 
     /**
-     * 获取某个设备信息
+     * 獲取某個設備信息
      *
-     * @param deviceId 设备ID
-     * @return 返回设备信息
+     * @param deviceId 設備ID
+     * @return 返回設備信息
      */
     @GetMapping("/{device_id}")
-     @TokenRequired // 添加 TokenRequired 注解，表示需要 token 鉴权
+     @TokenRequired // 添加 TokenRequired 註解，表示需要 token 鑒權
     public Result<Device> getDeviceInfo(
             @PathVariable("device_id") String deviceId
     ) {
@@ -38,40 +38,40 @@ public class DeviceController {
     }
 
     /**
-     * 获取用户设备列表
+     * 獲取用戶設備列表
      *
-     * @param userId 用户的id
-     * @return Result 包含设备列表的结果
+     * @param userId 用戶的id
+     * @return Result 包含設備列表的結果
      */
     @GetMapping("/user/{user_id}")
-     @TokenRequired // 添加 TokenRequired 注解，表示需要 token 鉴权
+     @TokenRequired // 添加 TokenRequired 註解，表示需要 token 鑒權
     public Result<DeviceListWithCount> getUserDevices(
             @PathVariable("user_id") Integer userId) {
         return deviceService.getUserDevices(userId);
     }
 
     /**
-     * 新增设备
+     * 新增設備
      *
-     * @param request 修改设备配置参数类
-     * @return 返回新增设备处理结果
+     * @param request 修改設備配置參數類
+     * @return 返回新增設備處理結果
      */
     @PostMapping("/add")
-     @TokenRequired // 添加 TokenRequired 注解，表示需要 token 鉴权
+     @TokenRequired // 添加 TokenRequired 註解，表示需要 token 鑒權
     public Result<String> addDevice(@RequestBody DeviceAddRequest request) {
         System.out.println(request);
         return deviceService.addDevice(request);
     }
 
     /**
-     * 修改设备配置
+     * 修改設備配置
      *
-     * @param request  修改设备配置参数类
-     * @param deviceId 设备id
-     * @return 返回修改设备配置处理结果
+     * @param request  修改設備配置參數類
+     * @param deviceId 設備id
+     * @return 返回修改設備配置處理結果
      */
     @PutMapping("/update/{device_id}")
-     @TokenRequired // 添加 TokenRequired 注解，表示需要 token 鉴权
+     @TokenRequired // 添加 TokenRequired 註解，表示需要 token 鑒權
     public Result<String> updateDevice(
             @PathVariable("device_id") String deviceId,
             @RequestBody DeviceUpdateRequest request) {
@@ -80,11 +80,11 @@ public class DeviceController {
     }
 
     /**
-     * 获取最近七天新增设备数量
+     * 獲取最近七天新增設備數量
      *
-     * @param userId 用户id
-     * @param today  当天的日期
-     * @return 最近七天新增的设备列表
+     * @param userId 用戶id
+     * @param today  當天的日期
+     * @return 最近七天新增的設備列表
      */
     @GetMapping("/new-devices-count")
     public Result<List<DeviceCountResponse>> getNewDevicesCount(
@@ -94,15 +94,15 @@ public class DeviceController {
     }
 
     /**
-     * 查询设备列表（带分页）
+     * 查詢設備列表（帶分頁）
      *
-     * @param userId       用户ID
-     * @param deviceId     设备ID（可为空）
-     * @param deviceName   设备名称（可为空）
-     * @param deviceType   设备类型（可为空）
-     * @param page         页码
-     * @param pageSize     每页显示数量
-     * @return 设备列表（带分页）
+     * @param userId       用戶ID
+     * @param deviceId     設備ID（可為空）
+     * @param deviceName   設備名稱（可為空）
+     * @param deviceType   設備類型（可為空）
+     * @param page         頁碼
+     * @param pageSize     每頁顯示數量
+     * @return 設備列表（帶分頁）
      */
     @GetMapping("/search-with-pagination")
     public Result<PageResult<List<DeviceListResponse>>> searchDevicesWithPagination(
@@ -132,10 +132,10 @@ public class DeviceController {
     }
 
     /**
-     * 删除设备
+     * 刪除設備
      *
-     * @param deviceId 设备id
-     * @return 返回删除结果
+     * @param deviceId 設備id
+     * @return 返回刪除結果
      */
     @DeleteMapping("/delete/{device_id}")
     public Result<String> deleteDevice(@PathVariable("device_id") String deviceId) {

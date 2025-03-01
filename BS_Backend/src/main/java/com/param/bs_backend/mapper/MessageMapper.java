@@ -15,19 +15,19 @@ import java.util.List;
 @Mapper
 public interface MessageMapper {
     /**
-     * 查询当前用户所有设备的总消息数
+     * 查詢當前用戶所有設備的總消息數
      *
-     * @param userId 用户ID
-     * @return 所有设备的总消息数量
+     * @param userId 用戶ID
+     * @return 所有設備的總消息數量
      */
     @Select("SELECT COUNT(*) FROM message WHERE device_id IN (SELECT device_id FROM device WHERE user_id = #{userId})")
     int getTotalMessageCountByUserId(@Param("userId") int userId);
 
     /**
-     * 查询设备的历史轨迹信息
+     * 查詢設備的歷史軌跡信息
      *
-     * @param deviceId 目标设备的id
-     * @return 包含设备历史轨迹信息的数组
+     * @param deviceId 目標設備的id
+     * @return 包含設備歷史軌跡信息的數組
      */
     @Select("SELECT timestamp, latitude, longitude FROM message " +
             "WHERE device_id = #{deviceId} " +
@@ -35,24 +35,24 @@ public interface MessageMapper {
     List<TrackResponse> getDeviceHistoryTrack(@Param("deviceId") String deviceId);
 
     /**
-     * 查询某一设备的历史消息
+     * 查詢某一設備的歷史消息
      *
-     * @param deviceId 目标设备的id
-     * @return 设备历史消息列表
+     * @param deviceId 目標設備的id
+     * @return 設備歷史消息列表
      */
     @Select("SELECT message_id, timestamp, message_type, message_content, latitude, longitude, value " +
             "FROM message " +
             "WHERE device_id = #{deviceId} " +
             "ORDER BY timestamp DESC")
-    // 按照时间戳降序排序
+    // 按照時間戳降序排序
     List<MessageResponse> getDeviceHistory(@Param("deviceId") String deviceId);
 
     /**
-     * 查询用户所属设备最近七天的消息总数
+     * 查詢用戶所屬設備最近七天的消息總數
      *
-     * @param userId 用户id
-     * @param today  当天的日期
-     * @return 最近七天用户接收的消息数量
+     * @param userId 用戶id
+     * @param today  當天的日期
+     * @return 最近七天用戶接收的消息數量
      */
     @Select("SELECT DATE(m.timestamp) AS date, " +
             "COUNT(*) AS count, " +
@@ -68,7 +68,7 @@ public interface MessageMapper {
     /**
      * 新增消息
      *
-     * @param message 封装了新增消息数据的对象
+     * @param message 封裝了新增消息數據的對象
      */
     @Insert("INSERT INTO message (device_id, timestamp, message_type, message_content, latitude, longitude, value) " +
             "VALUES (#{message.deviceId}, #{message.timestamp}, #{message.messageType}, " +

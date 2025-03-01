@@ -25,20 +25,20 @@ public class UserService {
     private DeviceMapper deviceMapper;
 
     /**
-     * 处理用户登录的service方法
+     * 處理用戶登錄的service方法
      *
-     * @param username 登录输入的用户名
-     * @param password 登录输入的密码
-     * @return 登录结果的response类
+     * @param username 登錄輸入的用戶名
+     * @param password 登錄輸入的密碼
+     * @return 登錄結果的response類
      */
     public Result<LoginResponse> login(String username, String password) {
         try {
-            // 检查用户是否存在
+            // 檢查用戶是否存在
             User user = userMapper.findByUsername(username);
             if (user == null) {
                 return Result.error("用户不存在");
             } else {
-                // 验证密码
+                // 驗證密碼
                 if (!user.getPassword().equals(password)) {
                     return Result.error("密码错误");
                 } else {
@@ -54,30 +54,30 @@ public class UserService {
 
 
     /**
-     * 处理用户注册的service方法
+     * 處理用戶註冊的service方法
      *
-     * @param user 用注册时输入的用户信息构造的 User 类
-     * @return 注册结果的response类（附代token，便于前端实现注册完毕直接跳转）
+     * @param user 用註冊時輸入的用戶信息構造的 User 類
+     * @return 註冊結果的response類（附代token，便於前端實現註冊完畢直接跳轉）
      */
     public Result<LoginResponse> register(User user) {
         try {
-            // 判断email是否已经存在
+            // 判斷email是否已經存在
             User existingEmail = userMapper.findByEmail(user.getEmail());
             if(existingEmail!=null){
                 return Result.error("注册邮箱已存在！");
             }
-            // 判断用户名是否已存在
+            // 判斷用戶名是否已存在
             User existingUser = userMapper.findByUsername(user.getUsername());
             if (existingUser != null) {
                 return Result.error("用户名已存在！");
             }
 
-            // (TODO:判断其他业务逻辑，例如密码复杂度等)
+            // (TODO:判斷其他業務邏輯，例如密碼複雜度等)
 
-            // 注册用户并返回用户信息及JWT令牌（调用registerUser方法时，会自动把自增id赋值给user对象）
+            // 註冊用戶並返回用戶信息及JWT令牌（調用registerUser方法時，會自動把自增id賦值給user對象）
             int insertRowCount = userMapper.registerUser(user);
             if (insertRowCount == 0) {
-                return Result.error("新增用户失败！");
+                return Result.error("新增用戶失敗！");
             }
 
             // 在用户注册成功后，自动帮用户注册device0001-device0005的设备（为了接受mqtt的消息）
@@ -86,20 +86,20 @@ public class UserService {
             return createLoginResponse(user);
         } catch (Exception e) {
             e.printStackTrace();
-            return Result.error("注册失败：" + e.getMessage());
+            return Result.error("註冊失敗：" + e.getMessage());
         }
     }
 
     /**
-     * 创建 LoginResponse 类的方法（在内部实现了创建token的逻辑）
+     * 創建 LoginResponse 類的方法（在內部實現了創建token的邏輯）
      *
-     * @param user 用于创建 LoginResponse 类的 User 类
-     * @return 用user信息和token封装成的 LoginResponse 类
+     * @param user 用於創建 LoginResponse 類的 User 類
+     * @return 用user信息和token封裝成的 LoginResponse 類
      */
     private Result<LoginResponse> createLoginResponse(User user) {
         String token = JwtUtil.sign(user.getId());
 
-        // 构造 LoginResponse 对象
+        // 構造 LoginResponse 對象
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setUserId(user.getId());
         loginResponse.setUsername(user.getUsername());
@@ -107,19 +107,19 @@ public class UserService {
         loginResponse.setPhone(user.getPhone());
         loginResponse.setToken(token);
 
-        // 返回成功结果，包含 LoginResponse 对象
+        // 返回成功結果，包含 LoginResponse 對象
         return Result.success(loginResponse);
     }
 
     /**
-     * 处理用户修改密码的service方法
+     * 處理用戶修改密碼的service方法
      *
-     * @param username    用户名
-     * @param oldPassword 旧密码
-     * @param newPassword 新密码
-     * @return 修改密码结果的response类
+     * @param username    用戶名
+     * @param oldPassword 舊密碼
+     * @param newPassword 新密碼
+     * @return 修改密碼結果的response類
      */
-    // @TokenRequired // 添加 TokenRequired 注解，表示需要 token 鉴权
+    // @TokenRequired // 添加 TokenRequired 註解，表示需要 token 鑒權
     public Result<String> updatePassword(String username, String oldPassword, String newPassword) {
         try {
             // 通过用户名查找用户，同时也返回密码以供校验
@@ -128,59 +128,59 @@ public class UserService {
                 return Result.error("用户不存在");
             }
 
-            System.out.println("原密码: "+user.getPassword()+" 传入的旧密码: "+oldPassword);
-            // 验证旧密码是否正确
+            System.out.println("原密碼: "+user.getPassword()+" 傳入的舊密碼: "+oldPassword);
+            // 驗證舊密碼是否正確
             if (!user.getPassword().equals(oldPassword)) {
-                return Result.error("旧密码不正确");
+                return Result.error("舊密碼不正確");
             }
 
-            // 更新密码
+            // 更新密碼
             int updateRowCount = userMapper.updatePassword(username, oldPassword, newPassword);
 
             if (updateRowCount > 0) {
-                return Result.success("密码更新成功!");
+                return Result.success("密碼更新成功!");
             } else {
-                return Result.error("密码更新失败!");
+                return Result.error("密碼更新失敗!");
             }
         } catch (Exception e) {
-            log.error("修改密码失败：" + e.getMessage());
-            return Result.error("修改密码失败：" + e.getMessage());
+            log.error("修改密碼失敗：" + e.getMessage());
+            return Result.error("修改密碼失敗：" + e.getMessage());
         }
     }
 
     /**
-     * 处理用户编辑个人信息的service方法
+     * 處理用戶編輯個人信息的service方法
      *
-     * @param userId      用户ID
-     * @param newUsername 新用户名
-     * @param newEmail    新邮箱
-     * @param newPhone    新手机号
-     * @return 编辑个人信息结果的response类
+     * @param userId      用戶ID
+     * @param newUsername 新用戶名
+     * @param newEmail    新郵箱
+     * @param newPhone    新手機號
+     * @return 編輯個人信息結果的response類
      */
-    // @TokenRequired // 添加 TokenRequired 注解，表示需要 token 鉴权
+    // @TokenRequired // 添加 TokenRequired 註解，表示需要 token 鑒權
     public Result<String> editUserInfo(Integer userId, String newUsername, String newEmail, String newPhone) {
         try {
-            // 判断email是否已经存在
+            // 判斷email是否已經存在
             User existingEmail = userMapper.findByEmail(newEmail);
             if(existingEmail!=null){
-                return Result.error("新邮箱已存在！");
+                return Result.error("新郵箱已存在！");
             }
-            // 判断用户名是否已存在
+            // 判斷用戶名是否已存在
             User existUser = userMapper.findByUsername(newUsername);
             if (existUser != null) {
-                return Result.error("新用户名已存在！");
+                return Result.error("新用戶名已存在！");
             }
 
-            // 检查新用户名是否和现有用户名一致
+            // 檢查新用戶名是否和現有用戶名一致
             User existingUser = userMapper.findById(userId);
 
             if (existingUser != null) {
                 if (Objects.equals(existingUser.getUsername(), newUsername)) {
-                    return Result.error("新用户名与当前用户名相同!");
+                    return Result.error("新用戶名與當前用戶名相同!");
                 } else if (Objects.equals(existingUser.getEmail(), newEmail)) {
-                    return Result.error("新邮箱与当前邮箱相同!");
+                    return Result.error("新郵箱與當前郵箱相同!");
                 } else if (Objects.equals(existingUser.getPhone(), newPhone)) {
-                    return Result.error("新手机号与当前手机号相同!");
+                    return Result.error("新手機號與當前手機號相同!");
                 }
             }
             assert existingUser != null;
@@ -190,13 +190,13 @@ public class UserService {
             int updateRowCount = userMapper.updateUserInfo(userId, newUsername, newEmail, newPhone);
 
             if (updateRowCount > 0) {
-                return Result.success("个人信息编辑成功");
+                return Result.success("個人信息編輯成功");
             } else {
-                return Result.error("个人信息编辑失败或没有修改任何信息");
+                return Result.error("個人信息編輯失敗或沒有修改任何信息");
             }
         } catch (Exception e) {
-            log.error("编辑个人信息失败：" + e.getMessage());
-            return Result.error("编辑个人信息失败：" + e.getMessage());
+            log.error("編輯個人信息失敗：" + e.getMessage());
+            return Result.error("編輯個人信息失敗：" + e.getMessage());
         }
     }
 
@@ -212,30 +212,30 @@ public class UserService {
     }
 
     /**
-     * 根据user_id重新获取用户信息
+     * 根據user_id重新獲取用戶信息
      *
-     * @param userId 用户id
-     * @return 登录结果的response类（存储用户信息和token）
+     * @param userId 用戶id
+     * @return 登錄結果的response類（存儲用戶信息和token）
      */
     public Result<LoginResponse> getUserInfo(Integer userId) {
         try {
             // 检查用户是否存在
             User user = userMapper.findById(userId);
             if (user == null) {
-                return Result.error("用户不存在");
+                return Result.error("用戶不存在");
             } else {
                     return createLoginResponse(user);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return Result.error("获取用户信息失败：" + e.getMessage());
+            return Result.error("獲取用戶信息失敗：" + e.getMessage());
         }
     }
 
     /**
-     * 在用户注册成功后新增设备的方法
+     * 在用戶註冊成功後新增設備的方法
      *
-     * @param userId 新注册用户的ID
+     * @param userId 新註冊用戶的ID
      */
     private void addDevicesForUser(Integer userId) {
         try {
@@ -244,20 +244,20 @@ public class UserService {
                 DeviceAddRequest device = new DeviceAddRequest();
                 device.setUserId(userId);
                 device.setDeviceName("device000" + i);
-                device.setDeviceDescription("系统自动新增的设备");
+                device.setDeviceDescription("系統自動新增的設備");
                 device.setDeviceType(new Random().nextInt(6) + 1);
                 device.setIsActive(true);
 
-                // 设置 registrationTime 和 lastUpdate（这个会在mapper中自动设成和registrationTime一致） 为当前时间
+                // 設置 registrationTime 和 lastUpdate（這個會在mapper中自動設成和registrationTime一致） 為當前時間
                 Date currentTime = new Date();
                 device.setRegistrationTime(currentTime);
 
-                // 调用 deviceMapper 插入设备
+                // 調用 deviceMapper 插入設備
                 deviceMapper.insertDevice(device);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("新增设备失败：" + e.getMessage());
+            log.error("新增設備失敗：" + e.getMessage());
         }
     }
 }

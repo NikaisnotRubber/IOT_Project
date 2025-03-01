@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Data
-@NoArgsConstructor // 无参构造函数
-@AllArgsConstructor // 有参构造函数
+@NoArgsConstructor // 無參構造函數
+@AllArgsConstructor // 有參構造函數
 public class User {
     private int id;
     private String username;
