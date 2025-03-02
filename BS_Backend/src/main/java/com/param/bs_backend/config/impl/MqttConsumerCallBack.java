@@ -73,7 +73,7 @@ public class MqttConsumerCallBack implements MqttCallback {
     }
 
     /**
-     * 消息發佈成功的回調
+     * 消息發佈成功回調
      */
     @Override
     public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
